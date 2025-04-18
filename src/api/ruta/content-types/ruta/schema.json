@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rutas",
+  "info": {
+    "singularName": "ruta",
+    "pluralName": "rutas",
+    "displayName": "Ruta"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "descripcion": {
+      "type": "text"
+    },
+    "bodegas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::bodega.bodega",
+      "mappedBy": "ruta"
+    }
+  }
+}

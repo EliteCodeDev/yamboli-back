@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vendedors",
+  "info": {
+    "singularName": "vendedor",
+    "pluralName": "vendedors",
+    "displayName": "Vendedor"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "apellidos": {
+      "type": "string",
+      "unique": false,
+      "required": true
+    },
+    "dni": {
+      "type": "string",
+      "required": true,
+      "maxLength": 8,
+      "unique": true
+    },
+    "bodegas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::bodega.bodega",
+      "mappedBy": "vendedor"
+    }
+  }
+}

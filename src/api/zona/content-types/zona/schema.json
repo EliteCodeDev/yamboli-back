@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "zonas",
+  "info": {
+    "singularName": "zona",
+    "pluralName": "zonas",
+    "displayName": "Zona"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "descripcion": {
+      "type": "text"
+    },
+    "bodegas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::bodega.bodega",
+      "mappedBy": "zona"
+    }
+  }
+}

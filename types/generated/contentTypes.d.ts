@@ -369,26 +369,204 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiDescripcionDescripcion extends Struct.CollectionTypeSchema {
-  collectionName: 'descripcions';
+export interface ApiBodegaBodega extends Struct.CollectionTypeSchema {
+  collectionName: 'bodegas';
   info: {
-    displayName: 'Descripcion';
-    pluralName: 'descripcions';
-    singularName: 'descripcion';
+    description: '';
+    displayName: 'Bodega';
+    pluralName: 'bodegas';
+    singularName: 'bodega';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
+    aprobado: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    captador: Schema.Attribute.String & Schema.Attribute.Required;
+    celular: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 9;
+      }>;
+    cliente: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    codigo_cliente: Schema.Attribute.String & Schema.Attribute.Required;
+    contrato_alquiler_foto: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    departamento: Schema.Attribute.String & Schema.Attribute.Required;
+    dia_visita: Schema.Attribute.Enumeration<
+      ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado']
+    >;
+    direccion: Schema.Attribute.String & Schema.Attribute.Required;
+    distrito: Schema.Attribute.String & Schema.Attribute.Required;
+    dni_foto: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    dni_ruc: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    fecha_capatacion: Schema.Attribute.Date &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    fecha_entrega: Schema.Attribute.Date & Schema.Attribute.Required;
+    giro: Schema.Attribute.Enumeration<
+      ['abarrotes', 'panaderia', 'licoreria']
+    > &
+      Schema.Attribute.Required;
+    latitud: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::bodega.bodega'
+    > &
+      Schema.Attribute.Private;
+    longitud: Schema.Attribute.String & Schema.Attribute.Required;
+    modelo_maquina: Schema.Attribute.String & Schema.Attribute.Required;
+    numero_maquina: Schema.Attribute.String & Schema.Attribute.Required;
+    observacion: Schema.Attribute.Text;
+    observacion_maquina: Schema.Attribute.String & Schema.Attribute.Required;
+    provincia: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    recibo_foto: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    ruta: Schema.Attribute.Relation<'manyToOne', 'api::ruta.ruta'>;
+    sede: Schema.Attribute.Relation<'manyToOne', 'api::sede.sede'>;
+    tipo_maquina: Schema.Attribute.Enumeration<['congeladora', 'refri']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    vendedor: Schema.Attribute.Relation<'manyToOne', 'api::vendedor.vendedor'>;
+    zona: Schema.Attribute.Relation<'manyToOne', 'api::zona.zona'>;
+  };
+}
+
+export interface ApiRutaRuta extends Struct.CollectionTypeSchema {
+  collectionName: 'rutas';
+  info: {
+    displayName: 'Ruta';
+    pluralName: 'rutas';
+    singularName: 'ruta';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    bodegas: Schema.Attribute.Relation<'oneToMany', 'api::bodega.bodega'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     descripcion: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::ruta.ruta'> &
+      Schema.Attribute.Private;
+    nombre: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSedeSede extends Struct.CollectionTypeSchema {
+  collectionName: 'sedes';
+  info: {
+    description: '';
+    displayName: 'Sede';
+    pluralName: 'sedes';
+    singularName: 'sede';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    bodegas: Schema.Attribute.Relation<'oneToMany', 'api::bodega.bodega'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descripcion: Schema.Attribute.Text & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::sede.sede'> &
+      Schema.Attribute.Private;
+    nombre: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiVendedorVendedor extends Struct.CollectionTypeSchema {
+  collectionName: 'vendedors';
+  info: {
+    displayName: 'Vendedor';
+    pluralName: 'vendedors';
+    singularName: 'vendedor';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    apellidos: Schema.Attribute.String & Schema.Attribute.Required;
+    bodegas: Schema.Attribute.Relation<'oneToMany', 'api::bodega.bodega'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dni: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 8;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::descripcion.descripcion'
+      'api::vendedor.vendedor'
     > &
+      Schema.Attribute.Private;
+    nombre: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiZonaZona extends Struct.CollectionTypeSchema {
+  collectionName: 'zonas';
+  info: {
+    displayName: 'Zona';
+    pluralName: 'zonas';
+    singularName: 'zona';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    bodegas: Schema.Attribute.Relation<'oneToMany', 'api::bodega.bodega'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descripcion: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::zona.zona'> &
       Schema.Attribute.Private;
     nombre: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -909,7 +1087,11 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::descripcion.descripcion': ApiDescripcionDescripcion;
+      'api::bodega.bodega': ApiBodegaBodega;
+      'api::ruta.ruta': ApiRutaRuta;
+      'api::sede.sede': ApiSedeSede;
+      'api::vendedor.vendedor': ApiVendedorVendedor;
+      'api::zona.zona': ApiZonaZona;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

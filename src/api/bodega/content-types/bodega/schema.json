@@ -1,0 +1,178 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bodegas",
+  "info": {
+    "singularName": "bodega",
+    "pluralName": "bodegas",
+    "displayName": "Bodega",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "fecha_capatacion": {
+      "type": "date",
+      "required": true,
+      "unique": true
+    },
+    "dni_ruc": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "cliente": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "direccion": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "distrito": {
+      "type": "string",
+      "required": true
+    },
+    "provincia": {
+      "type": "string",
+      "required": true
+    },
+    "departamento": {
+      "type": "string",
+      "required": true
+    },
+    "giro": {
+      "type": "enumeration",
+      "enum": [
+        "abarrotes",
+        "panaderia",
+        "licoreria"
+      ],
+      "required": true
+    },
+    "ruta": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ruta.ruta",
+      "inversedBy": "bodegas"
+    },
+    "zona": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::zona.zona",
+      "inversedBy": "bodegas"
+    },
+    "latitud": {
+      "type": "string",
+      "required": true
+    },
+    "longitud": {
+      "type": "string",
+      "required": true
+    },
+    "celular": {
+      "type": "string",
+      "required": true,
+      "maxLength": 9
+    },
+    "captador": {
+      "type": "string",
+      "required": true
+    },
+    "observacion": {
+      "type": "text",
+      "required": false
+    },
+    "aprobado": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "tipo_maquina": {
+      "type": "enumeration",
+      "enum": [
+        "congeladora",
+        "refri"
+      ],
+      "required": true
+    },
+    "vendedor": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::vendedor.vendedor",
+      "inversedBy": "bodegas"
+    },
+    "dia_visita": {
+      "type": "enumeration",
+      "enum": [
+        "lunes",
+        "martes",
+        "miercoles",
+        "jueves",
+        "viernes",
+        "sabado"
+      ]
+    },
+    "codigo_cliente": {
+      "type": "string",
+      "required": true
+    },
+    "fecha_entrega": {
+      "type": "date",
+      "required": true
+    },
+    "modelo_maquina": {
+      "type": "string",
+      "required": true
+    },
+    "numero_maquina": {
+      "type": "string",
+      "required": true
+    },
+    "observacion_maquina": {
+      "type": "string",
+      "required": true
+    },
+    "dni_foto": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "recibo_foto": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "contrato_alquiler_foto": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "sede": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::sede.sede",
+      "inversedBy": "bodegas"
+    }
+  }
+}
